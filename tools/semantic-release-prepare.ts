@@ -7,7 +7,7 @@ const pkg = JSON.parse(
   readFileSync(path.resolve(__dirname, "..", "package.json"))
 )
 
-pkg.scripts.prepush = "npm run test:prod && npm run build"
+pkg.scripts.prepush = "npm run test && npm run build"
 pkg.scripts.commitmsg = "commitlint -E HUSKY_GIT_PARAMS"
 
 writeFileSync(
