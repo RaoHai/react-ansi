@@ -1,0 +1,117 @@
+.metaList {
+  display: flex;
+  flex-wrap: wrap;
+
+  list-style: none;
+  margin: 0;
+  padding: 0;
+
+  li {
+    flex: 0 0 50%;
+    margin: 0 0 12px 0;
+
+    em {
+      font-style: normal;
+      font-weight: 14px;
+      color: #314659;
+      margin-right: 1em;
+      &::after {
+        content: '：';
+      }
+    }
+  }
+}
+
+.logMain {
+  display: block;
+}
+
+.logHeader {
+  height: 44px;
+  padding: 0.7em 0.8em 0.6em;
+  background: #444;
+  text-align: right;
+}
+
+.logBody {
+  position: relative;
+}
+
+.logFooter {
+  text-align: right;
+  background: #222;
+  color: #f1f1f1;
+  font-size: 12px;
+  height: 20px;
+  line-height: 20px;
+  padding: 0 8px;
+}
+
+.backToTop {
+  color: #f1f1f1;
+  padding-right: 12px;
+  background: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIGhlaWdodD0iNSIgd2lkdGg9IjEwIiB2aWV3Qm94PSIwIDAgMTAgNSI+CjxwYXRoIGZpbGw9IiNjMmMyYzIiIGQ9Ik0xMCw1LDUsMCwwLDV6Ii8+Cjwvc3ZnPgo=)
+    right 5px no-repeat #2b2b2b;
+}
+
+.foldLine,
+.logLine {
+  position: relative;
+  padding: 0 15px 0 62px;
+  margin: 0;
+  min-height: 19px;
+  &:hover {
+    background-color: #444 !important;
+  }
+  a {
+    display: inline-block;
+    text-align: right;
+    min-width: 40px;
+    margin-left: -40px;
+    cursor: pointer;
+    text-decoration: none;
+    position: absolute;
+    color: #666;
+
+    &::before {
+      content: counter(line-numbering);
+      counter-increment: line-numbering;
+      padding-right: 1em;
+    }
+  }
+}
+
+.foldLine {
+  color: #ffff91;
+  cursor: pointer;
+  // padding-left: 35px;
+  background: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIGhlaWdodD0iMTAiIHdpZHRoPSIxMCIgdmlld0JveD0iMCAwIDEwIDEwIj4KPHBhdGggZD0iTTIsOSw5LDUsMiwxeiIgc3Ryb2tlPSIjNTU1IiBzdHJva2Utd2lkdGg9IjAuNSIgZmlsbD0iIzY2NiIvPgo8L3N2Zz4K)
+    8px 3px no-repeat #2b2b2b;
+}
+
+.ansi {
+  clear: left;
+  min-height: 42px;
+  padding: 15px 0 40px 0;
+  color: #f1f1f1;
+  font-family: Cousine, monospace;
+  font-size: 12px;
+  line-height: 19px;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  background-color: #222;
+  counter-reset: line-numbering;
+  margin-top: 0;
+  margin-bottom: -45px;
+}
+
+.fold {
+  position: relative;
+  height: 19px;
+  overflow: hidden;
+  cursor: pointer;
+}
+
+.foldOpen {
+  height: auto;
+}
