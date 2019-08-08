@@ -55,7 +55,7 @@
     "docz-theme-default": "^1.2.0",
     "enzyme": "^3.9.0",
     "enzyme-adapter-react-16": "^1.13.2",
-    "gh-pages": "^1.2.0",
+    "gh-pages": "^2.1.1",
     "less": "^3.9.0",
     "react": "^16.4.1",
     "react-dom": "^16.4.1",
