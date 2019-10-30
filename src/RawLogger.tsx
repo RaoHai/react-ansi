@@ -2,7 +2,7 @@ import React, { useState, ReactNode } from 'react';
 import Anser, { AnserJsonEntry } from 'anser';
 import { escapeCarriageReturn } from 'escape-carriage';
 import styles from './log.module.less';
-import { Partical } from './Spliter';
+import { Partical } from './matcher';
 
 const LINK_REGEX = /(https?:\/\/(?:www\.|(?!www))[^\s\.]+\.[^\s]{2,}|www\.[^\s]+\.[^\s]{2,})/;
 
@@ -129,7 +129,9 @@ export function RawLogger({
           className={styles.foldLine}
           onClick={() => setFold(!fold)}
         >
-          {partical.label}
+          {partical.label ?
+            ansiToJSON(partical.label).map(convertBundleIntoReact.bind(null, useClasses, linkify))
+          : null}
         </div>
         {lines}
       </div>

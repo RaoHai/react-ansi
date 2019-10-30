@@ -1,12 +1,7 @@
+import { Matcher, Partical } from "./matcher";
+
 export const washRegExp = '\x1b?[[0-9;]+[a-zA-Z]';
 
-export type Matcher = [string, RegExp, RegExp, boolean?];
-export type Partical = {
-  label?: string;
-  content: string;
-  type: 'partical' | 'text';
-  fold: boolean;
-};
 
 export class Spliter {
   constructor(public matchers: Matcher[]) {}
@@ -14,21 +9,23 @@ export class Spliter {
   execute(log: string) {
     const particals: Partical[] = [];
     let lastIndex = 0;
-
     for (let i = 0; i < this.matchers.length; i++) {
-      const [name, regExpStart, regExpEnd, fold] = this.matchers[i];
-      regExpStart.lastIndex = lastIndex;
-      regExpEnd.lastIndex = lastIndex;
-      const startMatch = regExpStart.exec(log);
+      const { regexStart, regexEnd, label, matcherOptions } = this.matchers[i];
+      regexStart.lastIndex = lastIndex;
+      regexEnd.lastIndex = lastIndex;
+      const startMatch = regexStart.exec(log);
       if (!startMatch) {
         continue;
       }
 
-      const endMatch = regExpEnd.exec(log);
+      const endMatch = regexEnd.exec(log);
       if (!endMatch) {
         continue;
       }
 
+      const textLabel = label.indexOf('$') === 0 ? startMatch[
+        parseInt(label.replace('$', ''), 10)
+      ] : label;
       const startPosition = startMatch.index;
       const endPosition = endMatch.index;
       const cursor = endPosition + endMatch[0].length;
@@ -41,10 +38,10 @@ export class Spliter {
       }
 
       particals.push({
-        label: name,
+        label: textLabel,
         type: 'partical',
         content: log.substring(startPosition, cursor),
-        fold: !!fold,
+        fold: !!matcherOptions.defaultFold,
       });
       lastIndex = cursor;
     }
@@ -61,14 +58,15 @@ export class Spliter {
   }
 }
 
-const matchers = [
-  [
-    '环境信息',
-    new RegExp(`${washRegExp}Techless Function Job`, 'g'),
-    new RegExp(`Hostname\/IP: .*${washRegExp}\n*`, 'g'),
-    true,
-  ],
-  ['参数', new RegExp('Arguments:', 'g'), new RegExp(`${washRegExp}\n\n`, 'g'), true],
+export const defaultMatchers = [
+  new Matcher(
+    /travis_fold:start:\w+\n(^.*$)/gm,
+    /travis_fold:end:\w+\n(^.*$)/gm,
+    '$1',
+    {
+      defaultFold: true,
+    }
+  )
 ] as Matcher[];
 
-export const defaultSpliters = new Spliter(matchers);
+export const defaultSpliters = new Spliter(defaultMatchers);

@@ -14,3 +14,4 @@ build/
 es/
 lib/
 package-lock.json
+.docz/

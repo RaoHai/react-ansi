@@ -3,7 +3,7 @@
     "title": "Docz Typescript",
     "description": "My awesome app using docz",
     "menu": [],
-    "version": "1.0.0",
+    "version": "0.0.0-development",
     "repository": "https://github.com/RaoHai/react-ansi",
     "native": false,
     "codeSandbox": false,
@@ -81,18 +81,37 @@
     {
       "key": "example/index.mdx",
       "value": {
-        "name": "Hello world",
+        "name": "Basic Usage",
         "id": "fa5e10fb33af838620c6b11db9ad8916",
         "filepath": "example/index.mdx",
-        "link": "",
+        "link": "https://github.com/RaoHai/react-ansi/edit/master/example/index.mdx",
         "slug": "example-index",
         "route": "/example-index",
         "menu": "",
         "headings": [
           {
-            "slug": "hello-world",
+            "slug": "default",
             "depth": 1,
-            "value": "Hello world"
+            "value": "Default"
+          }
+        ]
+      }
+    },
+    {
+      "key": "example/realTime.mdx",
+      "value": {
+        "name": "Realtime",
+        "id": "9a91d08e42a0cebd25bd2caf8404ebf0",
+        "filepath": "example/realTime.mdx",
+        "link": "https://github.com/RaoHai/react-ansi/edit/master/example/realTime.mdx",
+        "slug": "example-real-time",
+        "route": "/example-real-time",
+        "menu": "",
+        "headings": [
+          {
+            "slug": "realtime",
+            "depth": 1,
+            "value": "Realtime"
           }
         ]
       }

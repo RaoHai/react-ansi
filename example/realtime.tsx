@@ -1,13 +1,6 @@
----
-name: Basic Usage
----
+import { useEffect, useState } from "react";
 
-import { Playground } from 'docz';
-import ReactAnsi from '../src/index.tsx';
-
-# Default
-<Playground>
-  <ReactAnsi log={`travis_fold:start:worker_info
+const log = `travis_fold:start:worker_info
 [0K[33;1mWorker information[0m
 hostname: 319dca05-3ddb-43cc-9e2b-c4f9e2cbb703@1.production-1-worker-org-gce-z0f9
 version: v6.2.0 https://github.com/travis-ci/worker/tree/5e5476e01646095f48eec13196fdb3faf8f5cbf7
@@ -77,7 +70,22 @@ ccache version 3.1.9
 
 Copyright (C) 2002-2007 Andrew Tridgell
 Copyright (C) 2009-2011 Joel Rosdahl
+`;
 
-`}
-/>
-</Playground>
+const logs = log.split('\n');
+
+export default function RealTime({ children }) {
+  const [pos, setPos] = useState(5);
+
+  let timeout;
+
+  useEffect(() => {
+    timeout = setTimeout(() => {
+      setPos(pos => pos > logs.length ? 5 : pos + 1);
+    }, 1000);
+
+    return () => clearTimeout(timeout);
+  });
+
+  return children({ log: logs.slice(0, pos).join('\n') });
+}
