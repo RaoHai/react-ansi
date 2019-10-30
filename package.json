@@ -69,7 +69,7 @@
     "rollup-plugin-typescript2": "^0.17.0",
     "rollup-plugin-url": "^1.4.0",
     "typescript": "^3.5.1",
-    "semantic-release": "^15.13.12"
+    "semantic-release": "^15.13.28"
   },
   "files": [
     "dist"
