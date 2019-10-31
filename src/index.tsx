@@ -10,10 +10,12 @@ import styles from './log.module.less';
 import { RawLogger } from './RawLogger';
 import { Matcher } from './matcher';
 
+export { Matcher };
 export interface FoldableLoggerProps {
   log: string;
   style?: React.CSSProperties;
   bodyStyle?: React.CSSProperties;
+  logStyle?: React.CSSProperties;
   matchers?: Matcher[];
   autoScroll?: boolean;
   showHeader?: boolean;
@@ -22,6 +24,7 @@ export interface FoldableLoggerProps {
 export default function FoldableLogger({
   style,
   bodyStyle,
+  logStyle = {},
   log,
   matchers = defaultMatchers,
   autoScroll = false,
@@ -75,7 +78,7 @@ export default function FoldableLogger({
       </div> : null}
 
       <div className={styles.logBody} style={bodyStyle} ref={bodyRef}>
-        <pre id="log" className={styles.ansi}>
+        <pre id="log" className={styles.ansi} style={logStyle}>
           {foldedLogger.map((partical, index) => {
             return (
               <RawLogger
@@ -89,7 +92,7 @@ export default function FoldableLogger({
         </pre>
       </div>
       <div className={styles.logFooter} onClick={scrollBodyToTop}>
-        <a className={styles.backToTop}>Top</a>
+        <a className={styles.backToTop}>{_('top')}</a>
       </div>
     </div>
   );
