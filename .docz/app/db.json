@@ -12,7 +12,8 @@
     "typescript": true,
     "plugins": [
       {}
-    ]
+    ],
+    "wrapper": "example/wrapper.tsx"
   },
   "props": [
     {

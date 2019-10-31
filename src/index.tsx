@@ -30,7 +30,7 @@ export default function FoldableLogger({
   log,
   matchers = defaultMatchers,
   autoScroll = false,
-  showHeader = true,
+  showHeader = false,
 }: FoldableLoggerProps) {
   const [autoScrollFlag, setAutoScrollFlag] = useState(autoScroll);
   const bodyRef = useRef<HTMLDivElement>(null);

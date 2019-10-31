@@ -56,6 +56,7 @@
     "enzyme-adapter-react-16": "^1.13.2",
     "gh-pages": "^1.2.0",
     "less": "^3.9.0",
+    "raw-loader": "^3.1.0",
     "react": "^16.4.1",
     "react-dom": "^16.4.1",
     "react-scripts-ts": "^2.16.0",
@@ -67,9 +68,10 @@
     "rollup-plugin-postcss": "^2.0.3",
     "rollup-plugin-typescript2": "^0.18.1",
     "rollup-plugin-url": "^3.0.0",
+    "semantic-release": "^15.13.28",
     "travis-deploy-once": "^5.0.11",
     "typescript": "^3.5.1",
-    "semantic-release": "^15.13.28"
+    "webpack-merge": "^4.2.2"
   },
   "files": [
     "dist"

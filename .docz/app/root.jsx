@@ -5,11 +5,12 @@ import Theme from 'docz-theme-default'
 
 import { imports } from './imports'
 import database from './db.json'
+import Wrapper from 'example/wrapper.tsx'
 
 const Root = () => {
   useDataServer('ws://127.0.0.1:60505')
   return (
-    <Theme linkComponent={Link} db={database}>
+    <Theme wrapper={Wrapper} linkComponent={Link} db={database}>
       <Routes imports={imports} />
     </Theme>
   )

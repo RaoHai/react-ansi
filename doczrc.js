@@ -1,4 +1,5 @@
 import { css } from 'docz-plugin-css'
+import merge from 'webpack-merge';
 
 export default {
   title: 'Docz Typescript',
@@ -10,4 +11,14 @@ export default {
       cssmodules: true,
     }),
   ],
+  wrapper: 'example/wrapper.tsx',
+  modifyBundlerConfig: config => {
+    return merge(config, {
+      module: {
+        rules: [
+          { test: /\.txt$/, loader: 'raw-loader' }
+        ]
+      }
+    })
+  }
 }

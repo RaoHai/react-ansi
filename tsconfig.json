@@ -19,6 +19,6 @@
     "noUnusedLocals": true,
     "noUnusedParameters": true
   },
-  "include": ["src"],
+  "include": ["src", "typings.d.ts"],
   "exclude": ["node_modules", "build", "dist", "example", "rollup.config.js"]
 }
