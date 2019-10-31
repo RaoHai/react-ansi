@@ -7,8 +7,10 @@ import { _ } from './utils/i18n';
 import { Spliter, defaultMatchers } from './Spliter';
 
 import styles from './log.module.less';
-import { RawLogger } from './RawLogger';
 import { Matcher } from './matcher';
+import { LogContent } from './LogContent';
+
+const MemorizedLogContent = React.memo(LogContent);
 
 export { Matcher };
 export interface FoldableLoggerProps {
@@ -78,18 +80,7 @@ export default function FoldableLogger({
       </div> : null}
 
       <div className={styles.logBody} style={bodyStyle} ref={bodyRef}>
-        <pre id="log" className={styles.ansi} style={logStyle}>
-          {foldedLogger.map((partical, index) => {
-            return (
-              <RawLogger
-                key={`logger-line-${index}`}
-                foldable={partical.type === 'partical'}
-                partical={partical}
-                index={index}
-              />
-            );
-          })}
-        </pre>
+        <MemorizedLogContent particals={foldedLogger} style={logStyle} />
       </div>
       <div className={styles.logFooter} onClick={scrollBodyToTop}>
         <a className={styles.backToTop}>{_('top')}</a>
