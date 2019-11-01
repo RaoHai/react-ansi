@@ -19,6 +19,6 @@
     "noUnusedLocals": true,
     "noUnusedParameters": true
   },
-  "include": ["src", "typings.d.ts"],
+  "include": ["src", "typings.d.ts", "src/__tests__/setupTests.ts"],
   "exclude": ["node_modules", "build", "dist", "example", "rollup.config.js"]
 }
