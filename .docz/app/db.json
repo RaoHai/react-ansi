@@ -17,7 +17,37 @@
   },
   "props": [
     {
-      "key": "src/RawLogger.tsx",
+      "key": "src/component/LogContent.tsx",
+      "value": [
+        {
+          "description": "",
+          "displayName": "LogContent",
+          "methods": [],
+          "props": {
+            "particals": {
+              "defaultValue": null,
+              "description": "",
+              "name": "particals",
+              "required": true,
+              "type": {
+                "name": "Partical[]"
+              }
+            },
+            "style": {
+              "defaultValue": null,
+              "description": "",
+              "name": "style",
+              "required": false,
+              "type": {
+                "name": "CSSProperties | undefined"
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "key": "src/component/RawLogger.tsx",
       "value": [
         {
           "description": "",
@@ -74,7 +104,28 @@
       ]
     },
     {
-      "key": "src/Spliter.ts",
+      "key": "src/component/Search.tsx",
+      "value": [
+        {
+          "description": "",
+          "displayName": "Search",
+          "methods": [],
+          "props": {
+            "defaultSearch": {
+              "defaultValue": null,
+              "description": "",
+              "name": "defaultSearch",
+              "required": false,
+              "type": {
+                "name": "boolean | undefined"
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "key": "src/model/Spliter.ts",
       "value": []
     }
   ],
@@ -91,9 +142,9 @@
         "menu": "",
         "headings": [
           {
-            "slug": "default",
+            "slug": "basic-usage",
             "depth": 1,
-            "value": "Default"
+            "value": "Basic Usage"
           }
         ]
       }

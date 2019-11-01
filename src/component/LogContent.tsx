@@ -1,7 +1,7 @@
 import React from 'react';
-import { Partical } from './matcher';
+import { Partical } from '../matcher';
 import { RawLogger } from './RawLogger';
-import styles from './log.module.less';
+import styles from '../style/log.module.less';
 
 export interface LogContent {
   particals: Partical[];

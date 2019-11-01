@@ -4,11 +4,12 @@
  */
 import React, { useRef, useEffect, useState } from 'react';
 import { _ } from './utils/i18n';
-import { Spliter, defaultMatchers } from './Spliter';
+import { Spliter, defaultMatchers } from './model/Spliter';
 
-import styles from './log.module.less';
+import styles from './style/log.module.less';
 import { Matcher } from './matcher';
-import { LogContent } from './LogContent';
+import { LogContent } from './component/LogContent';
+// import { Search } from './component/Search';
 
 const MemorizedLogContent = React.memo(LogContent);
 
@@ -80,6 +81,7 @@ export default function FoldableLogger({
       </div> : null}
 
       <div className={styles.logBody} style={bodyStyle} ref={bodyRef}>
+        {/* <Search defaultSearch /> */}
         <MemorizedLogContent particals={foldedLogger} style={logStyle} />
       </div>
       <div className={styles.logFooter} onClick={scrollBodyToTop}>

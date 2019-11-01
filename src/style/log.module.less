@@ -60,7 +60,7 @@
   padding: 0 15px 0 62px;
   margin: 0;
   min-height: 19px;
-  &:hover {
+  &:hover, &:hover::before {
     background-color: #444 !important;
   }
   a {
@@ -85,8 +85,18 @@
   color: #ffff91;
   cursor: pointer;
   // padding-left: 35px;
-  background: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIGhlaWdodD0iMTAiIHdpZHRoPSIxMCIgdmlld0JveD0iMCAwIDEwIDEwIj4KPHBhdGggZD0iTTIsOSw5LDUsMiwxeiIgc3Ryb2tlPSIjNTU1IiBzdHJva2Utd2lkdGg9IjAuNSIgZmlsbD0iIzY2NiIvPgo8L3N2Zz4K)
-    8px 3px no-repeat #2b2b2b;
+
+  &::before {
+    content: ' ';
+    position: absolute;
+    left: 8px;
+    top: 4px;
+    width: 10px;
+    height: 10px;
+    background: url('../media/arrow.svg') 8px 3px no-repeat #2b2b2b;
+    background-position: center;
+    transition: transform cubic-bezier(0.785, 0.135, 0.15, 0.86) .3s;
+  }
 }
 
 .ansi {
@@ -114,4 +124,7 @@
 
 .foldOpen {
   height: auto;
+  .foldLine::before {
+    transform: rotate(90deg);
+  }
 }

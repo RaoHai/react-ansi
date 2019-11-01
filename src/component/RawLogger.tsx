@@ -1,8 +1,8 @@
 import React, { useState, ReactNode } from 'react';
 import Anser, { AnserJsonEntry } from 'anser';
 import { escapeCarriageReturn } from 'escape-carriage';
-import styles from './log.module.less';
-import { Partical } from './matcher';
+import styles from '../style/log.module.less';
+import { Partical } from '../matcher';
 
 const LINK_REGEX = /(https?:\/\/(?:www\.|(?!www))[^\s\.]+\.[^\s]{2,}|www\.[^\s]+\.[^\s]{2,})/;
 

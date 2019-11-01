@@ -1,7 +1,6 @@
-import { Matcher, Partical } from "./matcher";
+import { Matcher, Partical } from "../matcher";
 
 export const washRegExp = '\x1b?[[0-9;]+[a-zA-Z]';
-
 
 export class Spliter {
   constructor(public matchers: Matcher[]) {}
