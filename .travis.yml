@@ -3,7 +3,11 @@ cache:
   directories:
     - ~/.npm
 notifications:
-  email: false
+  email:
+    recipients:
+        - surgesoft@gmail.com
+    on_success: change # default: change
+    on_failure: always # default: always
 node_js:
   - '10'
 script:
