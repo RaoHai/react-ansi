@@ -17,10 +17,6 @@
   },
   "props": [
     {
-      "key": "src/model/Spliter.ts",
-      "value": []
-    },
-    {
       "key": "src/component/LogContent.tsx",
       "value": [
         {
@@ -58,6 +54,10 @@
           }
         }
       ]
+    },
+    {
+      "key": "src/model/Spliter.ts",
+      "value": []
     },
     {
       "key": "src/component/RawLogger.tsx",

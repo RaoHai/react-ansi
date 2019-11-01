@@ -123,7 +123,7 @@ export function RawLogger({
       {partical.content.split('\n').map((line, index) => {
         return (
           <div className={styles.logLine} key={index}>
-            <a />
+            <a className={styles.lineNo} />
             {ansiToJSON(line).map(convertBundleIntoReact.bind(null, useClasses, linkify))}
           </div>
         );
