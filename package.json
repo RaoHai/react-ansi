@@ -48,6 +48,7 @@
     "@types/react-dom": "^16.0.5",
     "babel-core": "^6.26.3",
     "babel-runtime": "^6.26.0",
+    "coveralls": "^3.0.7",
     "cross-env": "^6.0.3",
     "docz": "^1.2.0",
     "docz-plugin-css": "^0.11.0",
@@ -80,10 +81,12 @@
     "dist"
   ],
   "jest": {
-    "collectCoverageFrom" : [
+    "collectCoverageFrom": [
       "src/**/*.{js,jsx,ts,tsx}",
       "!<rootDir>/node_modules/"
     ],
-    "coverageReporters": [ "lcov" ]
+    "coverageReporters": [
+      "lcov"
+    ]
   }
 }
