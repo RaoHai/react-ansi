@@ -50,6 +50,10 @@ function createStyle(bundle: AnserJsonEntry) {
   return style;
 }
 
+function isEmpty(style: null | object) {
+  return !style || Object.keys(style).length === 0
+};
+
 function ansiToJSON(input: string, useClasses = false) {
   input = escapeCarriageReturn(input);
   return Anser.ansiToJson(input, {
@@ -65,7 +69,7 @@ function convertBundleIntoReact(
   bundle: AnserJsonEntry,
   key: number
 ) {
-  const style = useClasses ? {} : createStyle(bundle);
+  const style = useClasses ? null : createStyle(bundle);
   const className = useClasses ? createClass(bundle) : '';
 
   let content: ReactNode[] | string = bundle.content;
@@ -73,7 +77,7 @@ function convertBundleIntoReact(
     content = bundle.content.split(/(\s+)/).reduce(
       (words, word, index) => {
         if (index === 0) {
-          words.push(' ');
+          words.push('');
         }
 
         if (!LINK_REGEX.test(word)) {
@@ -86,11 +90,16 @@ function convertBundleIntoReact(
         </a>);
 
         return words;
-      }, [] as React.ReactNode[]);
-    }
-  return <span className={className} style={style} key={key}>
-    {content}
-  </span>;
+      }, [] as React.ReactNode[],
+    );
+  }
+
+
+  if (!isEmpty(style) || className) {
+    return <span style={style || {}} key={key}>{content}</span>;
+  }
+
+  return content;
 }
 
 export function RawLogger({
