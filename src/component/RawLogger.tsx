@@ -76,8 +76,9 @@ function convertBundleIntoReact(
   if (linkify) {
     content = bundle.content.split(/(\s+)/).reduce(
       (words, word, index) => {
-        if (index === 0) {
-          words.push('');
+        if (index % 2 === 1) {
+          words.push(word);
+          return words;
         }
 
         if (!LINK_REGEX.test(word)) {
