@@ -14,6 +14,7 @@
   },
   "scripts": {
     "test": "cross-env CI=1 react-scripts-ts test --env=jsdom",
+    "cov": "cross-env CI=1 react-scripts-ts test --env=jsdom --coverage",
     "test:watch": "react-scripts-ts test --env=jsdom",
     "dev": "docz dev",
     "build": "rollup -c",
@@ -77,5 +78,12 @@
   },
   "files": [
     "dist"
-  ]
+  ],
+  "jest": {
+    "collectCoverageFrom" : [
+      "src/**/*.{js,jsx,ts,tsx}",
+      "!<rootDir>/node_modules/"
+    ],
+    "coverageReporters": [ "lcov" ]
+  }
 }

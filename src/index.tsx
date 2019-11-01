@@ -22,6 +22,7 @@ export interface FoldableLoggerProps {
   matchers?: Matcher[];
   autoScroll?: boolean;
   showHeader?: boolean;
+  linkify?: boolean;
 }
 
 export default function FoldableLogger({
@@ -32,6 +33,7 @@ export default function FoldableLogger({
   matchers = defaultMatchers,
   autoScroll = false,
   showHeader = false,
+  linkify = true,
 }: FoldableLoggerProps) {
   const [autoScrollFlag, setAutoScrollFlag] = useState(autoScroll);
   const bodyRef = useRef<HTMLDivElement>(null);
@@ -82,7 +84,7 @@ export default function FoldableLogger({
 
       <div className={styles.logBody} style={bodyStyle} ref={bodyRef}>
         {/* <Search defaultSearch /> */}
-        <MemorizedLogContent particals={foldedLogger} style={logStyle} />
+        <MemorizedLogContent particals={foldedLogger} style={logStyle} linkify={linkify} />
       </div>
       <div className={styles.logFooter} onClick={scrollBodyToTop}>
         <a className={styles.backToTop}>{_('top')}</a>
