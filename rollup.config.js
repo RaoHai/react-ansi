@@ -5,6 +5,8 @@ import external from 'rollup-plugin-peer-deps-external'
 import less from 'less'
 import postcss from 'rollup-plugin-postcss'
 import resolve from 'rollup-plugin-node-resolve'
+import postcssUrl from 'postcss-url'
+
 import url from 'rollup-plugin-url'
 import svgr from '@svgr/rollup'
 
@@ -61,6 +63,9 @@ export default {
     postcss({
       modules: true,
       process: processLess,
+      plugins: [
+        postcssUrl({ url: 'inline'})
+      ]
     }),
     url(),
     svgr(),
