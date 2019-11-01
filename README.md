@@ -7,6 +7,8 @@
 [![Dependencies](https://david-dm.org/RaoHai/react-ansi.svg)](https://david-dm.org/RaoHai/react-ansi)
 [![Ci](https://api.travis-ci.org/RaoHai/react-ansi.svg?branch=master)](https://travis-ci.org/RaoHai/react-ansi)
 
+![log](https://user-images.githubusercontent.com/566097/67918532-b1245700-fbd7-11e9-9e9b-ed129b49d377.gif)
+
 ## Install
 
 ```bash
