@@ -70,7 +70,7 @@ function convertBundleIntoReact(
 
   let content: ReactNode[] | string = bundle.content;
   if (linkify) {
-    content = bundle.content.split(' ').reduce(
+    content = bundle.content.split(/(\s+)/).reduce(
       (words, word, index) => {
         if (index === 0) {
           words.push(' ');

@@ -17,6 +17,49 @@
   },
   "props": [
     {
+      "key": "src/model/Spliter.ts",
+      "value": []
+    },
+    {
+      "key": "src/component/LogContent.tsx",
+      "value": [
+        {
+          "description": "",
+          "displayName": "LogContent",
+          "methods": [],
+          "props": {
+            "particals": {
+              "defaultValue": null,
+              "description": "",
+              "name": "particals",
+              "required": true,
+              "type": {
+                "name": "Partical[]"
+              }
+            },
+            "style": {
+              "defaultValue": null,
+              "description": "",
+              "name": "style",
+              "required": false,
+              "type": {
+                "name": "CSSProperties | undefined"
+              }
+            },
+            "linkify": {
+              "defaultValue": null,
+              "description": "",
+              "name": "linkify",
+              "required": false,
+              "type": {
+                "name": "boolean | undefined"
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
       "key": "src/component/RawLogger.tsx",
       "value": [
         {
@@ -58,49 +101,6 @@
               "required": false,
               "type": {
                 "name": "boolean | undefined"
-              }
-            },
-            "linkify": {
-              "defaultValue": null,
-              "description": "",
-              "name": "linkify",
-              "required": false,
-              "type": {
-                "name": "boolean | undefined"
-              }
-            }
-          }
-        }
-      ]
-    },
-    {
-      "key": "src/model/Spliter.ts",
-      "value": []
-    },
-    {
-      "key": "src/component/LogContent.tsx",
-      "value": [
-        {
-          "description": "",
-          "displayName": "LogContent",
-          "methods": [],
-          "props": {
-            "particals": {
-              "defaultValue": null,
-              "description": "",
-              "name": "particals",
-              "required": true,
-              "type": {
-                "name": "Partical[]"
-              }
-            },
-            "style": {
-              "defaultValue": null,
-              "description": "",
-              "name": "style",
-              "required": false,
-              "type": {
-                "name": "CSSProperties | undefined"
               }
             },
             "linkify": {
