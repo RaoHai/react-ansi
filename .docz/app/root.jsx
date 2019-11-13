@@ -8,7 +8,7 @@ import database from './db.json'
 import Wrapper from 'example/wrapper.tsx'
 
 const Root = () => {
-  useDataServer('ws://127.0.0.1:60506')
+  useDataServer('ws://127.0.0.1:60505')
   return (
     <Theme wrapper={Wrapper} linkComponent={Link} db={database}>
       <Routes imports={imports} />

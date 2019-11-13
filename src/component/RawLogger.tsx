@@ -4,8 +4,7 @@ import { escapeCarriageReturn } from 'escape-carriage';
 import styles from '../style/log.module.less';
 import { Partical } from '../matcher';
 
-const LINK_REGEX = /(https?:\/\/(?:www\.|(?!www))[^\s\.]+\.[^\s]{2,}|www\.[^\s]+\.[^\s]{2,})/;
-
+const LINK_REGEX = /https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)/;
 
 /**
  * Create a class string.
@@ -81,14 +80,20 @@ function convertBundleIntoReact(
           return words;
         }
 
-        if (!LINK_REGEX.test(word)) {
+        const matches = LINK_REGEX.exec(word);
+        if (!matches) {
           words.push(word);
           return words;
         }
 
-        words.push(<a key={index} href={word} target="_blank" rel="noopener noreferer">
-          {word}
-        </a>);
+        const matchedUrl = matches[0];
+        words.push(<>
+          {word.substring(0, matches.index)}
+          <a key={index} href={matchedUrl} target="_blank" rel="noopener noreferer">
+            {matchedUrl}
+          </a>
+          {word.substring(matches.index + matchedUrl.length)}
+        </>)
 
         return words;
       }, [] as React.ReactNode[],
