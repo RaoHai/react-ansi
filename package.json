@@ -50,7 +50,7 @@
     "babel-runtime": "^6.26.0",
     "coveralls": "^3.0.7",
     "cross-env": "^6.0.3",
-    "docz": "^1.2.0",
+    "docz": "^2.1.1",
     "docz-plugin-css": "^0.11.0",
     "docz-theme-default": "^1.2.0",
     "enzyme": "^3.9.0",
