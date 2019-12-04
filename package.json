@@ -58,7 +58,7 @@
     "gh-pages": "^1.2.0",
     "less": "^3.9.0",
     "postcss-url": "^8.0.0",
-    "raw-loader": "^3.1.0",
+    "raw-loader": "^4.0.0",
     "react": "^16.4.1",
     "react-dom": "^16.4.1",
     "react-scripts-ts": "^2.16.0",
