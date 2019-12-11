@@ -13,5 +13,4 @@ config.local.js
 build/
 es/
 lib/
-package-lock.json
 .docz/
