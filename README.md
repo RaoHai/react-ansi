@@ -1,8 +1,8 @@
 <h1 align="center" style="border-bottom: none;"> 🖥️ React Ansi</h1>
 <h3 align="center"> A foldable and searchable ansi log viewer for React.</h3>
 <p align="center">
-  <a href="">
-    <img src="https://github.com/RaoHai/react-ansi/workflows/test/badge.svg" alt="github action" />
+  <a href="https://github.com/RaoHai/react-ansi">
+    <img src="https://github.com/RaoHai/react-ansi/workflows/Node%20CI/badge.svg" alt="github action" />
   </a>
 
   <a href="https://www.npmjs.com/package/react-ansi">
