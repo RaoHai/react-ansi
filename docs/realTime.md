@@ -1,13 +1,11 @@
----
-name: Realtime
----
+# Realtime
 
-import { Playground } from 'docz';
-import ReactAnsi from '../src/index.tsx';
+```jsx
+import React from 'react';
+import ReactAnsi from 'react-ansi';
 import RealTime from './realtime.tsx';
 
-# Realtime
-<Playground>
+export default () => (
   <RealTime>
     {({ log }) => <ReactAnsi
       log={log}
@@ -15,4 +13,5 @@ import RealTime from './realtime.tsx';
       autoScroll
     />}
   </RealTime>
-</Playground>
+);
+```
