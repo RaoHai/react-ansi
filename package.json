@@ -1,6 +1,6 @@
 {
   "name": "react-ansi",
-  "version": "1.8.1",
+  "version": "2.0.0",
   "description": "",
   "author": "RaoHai",
   "license": "MIT",
@@ -49,6 +49,7 @@
     "cross-env": "^6.0.3",
     "docz": "^2.1.1",
     "docz-theme-default": "^1.2.0",
+    "docz-utils": "2.3.0",
     "enzyme": "^3.9.0",
     "enzyme-adapter-react-16": "^1.13.2",
     "gatsby-plugin-less": "^3.0.17",

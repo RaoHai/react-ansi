@@ -1,8 +1,11 @@
-import React, { useState, ReactNode } from 'react';
+import React, { useState, ReactNode, useMemo, useEffect, useContext } from 'react';
 import Anser, { AnserJsonEntry } from 'anser';
 import { escapeCarriageReturn } from 'escape-carriage';
-import styles from '../style/log.module.less';
 import { Partical } from '../matcher';
+import { ErrorMatcher } from '../errorMatcher';
+
+import styles from '../style/log.module.less';
+import { ErrorContext } from '../model/ErrorContext';
 
 const LINK_REGEX = /https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)/;
 
@@ -110,31 +113,26 @@ function convertBundleIntoReact(
 
 export function RawLogger({
   partical,
+  errorMatcher,
   index = 0,
   foldable = false,
   useClasses = false,
   linkify = false,
 }: {
   partical: Partical;
+  errorMatcher: ErrorMatcher;
   index: number;
   foldable?: boolean;
   useClasses?: boolean;
   linkify?: boolean;
 }) {
+  const lineProps = { useClasses, linkify, errorMatcher };
   const [fold, setFold] = useState(partical.fold);
-
-  const lines = (
-    <>
-      {partical.content.split('\n').map((line, index) => {
-        return (
-          <div className={styles.logLine} key={index}>
-            <a className={styles.lineNo} />
-            {ansiToJSON(line).map(convertBundleIntoReact.bind(null, useClasses, linkify))}
-          </div>
-        );
-      })}
-    </>
-  );
+  const lines = React.useMemo(() => {
+    return partical.content.split('\n').map((line, index) => (
+      <Line {...lineProps} line={line} index={index} />
+    ));
+  }, [partical, styles, useClasses, linkify, errorMatcher]);
 
   if (foldable) {
     return (
@@ -153,5 +151,51 @@ export function RawLogger({
     );
   }
 
-  return lines;
+  return <>{lines}</>;
+}
+
+export function Line({
+  line,
+  useClasses,
+  linkify,
+  errorMatcher,
+  index,
+}: {
+  line: string;
+  errorMatcher: ErrorMatcher;
+  useClasses: boolean;
+  linkify: boolean;
+  index: number,
+}) {
+  const { addRefs } = useContext(ErrorContext);
+  const { errors, content } = useMemo(() => {
+    return ansiToJSON(line).reduce((prev, bundle, index) => {
+      const content = convertBundleIntoReact(useClasses, linkify, bundle, index);
+      const errors = errorMatcher.match(bundle);
+      return {
+        content: prev.content.concat([content]),
+        errors: prev.errors.concat(errors),
+      }
+    }, {
+      content: [] as any,
+      errors: [] as ErrorMatcher['patterns'],
+    });
+  }, [line]);
+
+  const ref = React.createRef<HTMLDivElement>();
+
+  useEffect(() => {
+    if (errors.length && ref.current) {
+      if (errors.length && addRefs) {
+        addRefs(errors, ref.current);
+      }
+    }
+  }, [ref, errors, addRefs]);
+
+  return (
+    <div className={`${styles.logLine} ${errors.length ? styles.error : ''}`} key={index} ref={ref}>
+      <a className={styles.lineNo} />
+      {content}
+    </div>
+  );
 }

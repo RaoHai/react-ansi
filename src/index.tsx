@@ -6,20 +6,23 @@ import React, { useRef, useEffect, useState } from 'react';
 import { _ } from './utils/i18n';
 import { Spliter, defaultMatchers } from './model/Spliter';
 
-import styles from './style/log.module.less';
 import { Matcher } from './matcher';
+import { ErrorMatcher, defaultErrorMatchers, ErrorMatcherPatterns } from './errorMatcher';
 import { LogContent } from './component/LogContent';
-// import { Search } from './component/Search';
+import { ErrorContext, errorRefs } from './model/ErrorContext';
+
+import styles from './style/log.module.less';
 
 const MemorizedLogContent = React.memo(LogContent);
 
-export { Matcher };
+export { Matcher, ErrorContext, errorRefs };
 export interface FoldableLoggerProps {
   log: string;
   style?: React.CSSProperties;
   bodyStyle?: React.CSSProperties;
   logStyle?: React.CSSProperties;
   matchers?: Matcher[];
+  errorMatchers?: ErrorMatcherPatterns;
   autoScroll?: boolean;
   showHeader?: boolean;
   linkify?: boolean;
@@ -31,6 +34,7 @@ export default function FoldableLogger({
   logStyle = {},
   log,
   matchers = defaultMatchers,
+  errorMatchers = defaultErrorMatchers,
   autoScroll = false,
   showHeader = false,
   linkify = true,
@@ -38,6 +42,7 @@ export default function FoldableLogger({
   const [autoScrollFlag, setAutoScrollFlag] = useState(autoScroll);
   const bodyRef = useRef<HTMLDivElement>(null);
   const spliter = React.useMemo(() => new Spliter(matchers), [matchers]);
+  const errorMatcher = React.useMemo(() => new ErrorMatcher(errorMatchers), [errorMatchers]);
 
   const foldedLogger = spliter.execute(log);
 
@@ -84,7 +89,12 @@ export default function FoldableLogger({
 
       <div className={styles.logBody} style={bodyStyle} ref={bodyRef}>
         {/* <Search defaultSearch /> */}
-        <MemorizedLogContent particals={foldedLogger} style={logStyle} linkify={linkify} />
+        <MemorizedLogContent
+          particals={foldedLogger}
+          style={logStyle}
+          linkify={linkify}
+          errorMatcher={errorMatcher}
+        />
       </div>
       <div className={styles.logFooter} onClick={scrollBodyToTop}>
         <a className={styles.backToTop}>{_('top')}</a>
