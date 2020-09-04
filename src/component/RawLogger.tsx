@@ -167,7 +167,7 @@ export function Line({
   linkify: boolean;
   index: number,
 }) {
-  const { addRefs } = useContext(ErrorContext);
+  const { setErrorRefs } = useContext(ErrorContext);
   const { errors, content } = useMemo(() => {
     return ansiToJSON(line).reduce((prev, bundle, index) => {
       const content = convertBundleIntoReact(useClasses, linkify, bundle, index);
@@ -186,11 +186,11 @@ export function Line({
 
   useEffect(() => {
     if (errors.length && ref.current) {
-      if (errors.length && addRefs) {
-        addRefs(errors, ref.current);
+      if (errors.length && setErrorRefs) {
+        setErrorRefs(errors, ref.current);
       }
     }
-  }, [ref, errors, addRefs]);
+  }, [ref, errors, setErrorRefs]);
 
   return (
     <div className={`${styles.logLine} ${errors.length ? styles.error : ''}`} key={index} ref={ref}>
