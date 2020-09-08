@@ -2,16 +2,19 @@
  * An foldable ansi logger for react
  * Inspired by ansi-to-react: https://github.com/nteract/nteract/blob/master/packages/ansi-to-react
  */
-import React, { useRef, useEffect, useState } from 'react';
+import React, { useRef, useEffect, useState, useCallback } from 'react';
+import produce, { enableMapSet } from 'immer';
 import { _ } from './utils/i18n';
 import { Spliter, defaultMatchers } from './model/Spliter';
 
 import { Matcher } from './matcher';
-import { ErrorMatcher, defaultErrorMatchers, ErrorMatcherPatterns } from './errorMatcher';
+import { ErrorMatcher, defaultErrorMatchers, ErrorMatcherPatterns, ErrorMatcherPattern } from './errorMatcher';
 import { LogContent } from './component/LogContent';
 import { ErrorContext, errorRefs } from './model/ErrorContext';
 
 import styles from './style/log.module.less';
+
+enableMapSet();
 
 const MemorizedLogContent = React.memo(LogContent);
 
@@ -26,6 +29,13 @@ export interface FoldableLoggerProps {
   autoScroll?: boolean;
   showHeader?: boolean;
   linkify?: boolean;
+  children: ({
+    hasError,
+    errors,
+  }: {
+    hasError: boolean;
+    errors: Map<HTMLDivElement, ErrorMatcherPattern[]>;
+  }) => JSX.Element;
 }
 
 export default function FoldableLogger({
@@ -33,6 +43,7 @@ export default function FoldableLogger({
   bodyStyle,
   logStyle = {},
   log,
+  children,
   matchers = defaultMatchers,
   errorMatchers = defaultErrorMatchers,
   autoScroll = false,
@@ -43,8 +54,15 @@ export default function FoldableLogger({
   const bodyRef = useRef<HTMLDivElement>(null);
   const spliter = React.useMemo(() => new Spliter(matchers), [matchers]);
   const errorMatcher = React.useMemo(() => new ErrorMatcher(errorMatchers), [errorMatchers]);
+  const [errors, setErrors] = useState(new Map<HTMLDivElement, ErrorMatcherPattern[]>());
 
-  const foldedLogger = spliter.execute(log);
+  const setErrorRefs = useCallback((error: ErrorMatcherPattern[], ref: HTMLDivElement) => {
+    setErrors(err => produce(err, draft => {
+      draft.set(ref as any, error);
+    }));
+  }, [setErrors]);
+
+  const foldedLogger = React.useMemo(() => spliter.execute(log), [spliter, log]);
 
   useEffect(() => {
     if (autoScrollFlag && bodyRef.current) {
@@ -80,25 +98,28 @@ export default function FoldableLogger({
   }
 
   return (
-    <div className={styles.logMain} style={style}>
-      {showHeader ? <div className={styles.logHeader}>
-        <button className={styles.rawLog}>
-          {_('rawLog')}
-        </button>
-      </div> : null}
+    <ErrorContext.Provider value={{ setErrorRefs }}>
+      <div className={`${styles.logMain} ${errors.size ? styles.hasError : ''}`} style={style}>
+        {showHeader ? <div className={styles.logHeader}>
+          <button className={styles.rawLog}>
+            {_('rawLog')}
+          </button>
+        </div> : null}
 
-      <div className={styles.logBody} style={bodyStyle} ref={bodyRef}>
-        {/* <Search defaultSearch /> */}
-        <MemorizedLogContent
-          particals={foldedLogger}
-          style={logStyle}
-          linkify={linkify}
-          errorMatcher={errorMatcher}
-        />
+        <div className={styles.logBody} style={bodyStyle} ref={bodyRef}>
+          {/* <Search defaultSearch /> */}
+          <MemorizedLogContent
+            particals={foldedLogger}
+            style={logStyle}
+            linkify={linkify}
+            errorMatcher={errorMatcher}
+          />
+        </div>
+        <div className={styles.logFooter} onClick={scrollBodyToTop}>
+          <a className={styles.backToTop}>{_('top')}</a>
+        </div>
       </div>
-      <div className={styles.logFooter} onClick={scrollBodyToTop}>
-        <a className={styles.backToTop}>{_('top')}</a>
-      </div>
-    </div>
+      {errors.size && children ? children({ hasError: !!errors.size, errors }) : null}
+    </ErrorContext.Provider>
   );
 }

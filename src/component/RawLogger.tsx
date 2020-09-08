@@ -1,8 +1,8 @@
-import React, { useState, ReactNode, useMemo, useEffect, useContext } from 'react';
+import React, { useState, ReactNode, useEffect, useContext } from 'react';
 import Anser, { AnserJsonEntry } from 'anser';
 import { escapeCarriageReturn } from 'escape-carriage';
 import { Partical } from '../matcher';
-import { ErrorMatcher } from '../errorMatcher';
+import { ErrorMatcher, ErrorMatcherPattern } from '../errorMatcher';
 
 import styles from '../style/log.module.less';
 import { ErrorContext } from '../model/ErrorContext';
@@ -126,11 +126,33 @@ export function RawLogger({
   useClasses?: boolean;
   linkify?: boolean;
 }) {
+  const { setErrorRefs } = useContext(ErrorContext);
   const lineProps = { useClasses, linkify, errorMatcher };
   const [fold, setFold] = useState(partical.fold);
+
   const lines = React.useMemo(() => {
-    return partical.content.split('\n').map((line, index) => (
-      <Line {...lineProps} line={line} index={index} />
+    const lines = partical.content.split('\n').map(line => {
+      return ansiToJSON(line).reduce((prev, bundle, index) => {
+        const content = convertBundleIntoReact(useClasses, linkify, bundle, index);
+        const errors = errorMatcher.match(bundle);
+        return {
+          content: prev.content.concat([content]),
+          errors: prev.errors.concat(errors),
+        }
+      }, {
+        content: [] as any,
+        errors: [] as ErrorMatcher['patterns'],
+      });
+    });
+
+    return lines.map((line, index) => (
+      <Line
+        {...lineProps}
+        line={line.content}
+        errors={line.errors}
+        index={index}
+        saveRef={setErrorRefs}
+      />
     ));
   }, [partical, styles, useClasses, linkify, errorMatcher]);
 
@@ -156,46 +178,28 @@ export function RawLogger({
 
 export function Line({
   line,
-  useClasses,
-  linkify,
-  errorMatcher,
+  errors,
   index,
+  saveRef,
 }: {
   line: string;
-  errorMatcher: ErrorMatcher;
-  useClasses: boolean;
-  linkify: boolean;
+  errors: ErrorMatcher['patterns'],
   index: number,
+  saveRef: (errors: ErrorMatcherPattern[], ref: HTMLDivElement) => void;
 }) {
-  const { setErrorRefs } = useContext(ErrorContext);
-  const { errors, content } = useMemo(() => {
-    return ansiToJSON(line).reduce((prev, bundle, index) => {
-      const content = convertBundleIntoReact(useClasses, linkify, bundle, index);
-      const errors = errorMatcher.match(bundle);
-      return {
-        content: prev.content.concat([content]),
-        errors: prev.errors.concat(errors),
-      }
-    }, {
-      content: [] as any,
-      errors: [] as ErrorMatcher['patterns'],
-    });
-  }, [line]);
 
   const ref = React.createRef<HTMLDivElement>();
 
   useEffect(() => {
-    if (errors.length && ref.current) {
-      if (errors.length && setErrorRefs) {
-        setErrorRefs(errors, ref.current);
-      }
+    if (errors.length && ref.current && saveRef) {
+      saveRef(errors, ref.current);
     }
-  }, [ref, errors, setErrorRefs]);
+  }, [ref.current, errors]);
 
   return (
     <div className={`${styles.logLine} ${errors.length ? styles.error : ''}`} key={index} ref={ref}>
       <a className={styles.lineNo} />
-      {content}
+      {line}
     </div>
   );
 }
