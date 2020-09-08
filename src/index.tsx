@@ -7,7 +7,7 @@ import { _ } from './utils/i18n';
 import { Spliter, defaultMatchers } from './model/Spliter';
 
 import { Matcher } from './matcher';
-import { ErrorMatcher, defaultErrorMatchers, ErrorMatcherPatterns } from './errorMatcher';
+import { ErrorMatcher, defaultErrorMatchers, ErrorMatcherPatterns, ErrorMatcherPattern } from './errorMatcher';
 import { LogContent } from './component/LogContent';
 import { ErrorContext, errorRefs } from './model/ErrorContext';
 
@@ -26,7 +26,10 @@ export interface FoldableLoggerProps {
   autoScroll?: boolean;
   showHeader?: boolean;
   linkify?: boolean;
+  setErrorRefs?: (errors: ErrorMatcherPattern[], ref: HTMLDivElement) => void;
 }
+
+function noop() {}
 
 export default function FoldableLogger({
   style,
@@ -38,6 +41,7 @@ export default function FoldableLogger({
   autoScroll = false,
   showHeader = false,
   linkify = true,
+  setErrorRefs = noop,
 }: FoldableLoggerProps) {
   const [autoScrollFlag, setAutoScrollFlag] = useState(autoScroll);
   const bodyRef = useRef<HTMLDivElement>(null);
@@ -80,25 +84,27 @@ export default function FoldableLogger({
   }
 
   return (
-    <div className={styles.logMain} style={style}>
-      {showHeader ? <div className={styles.logHeader}>
-        <button className={styles.rawLog}>
-          {_('rawLog')}
-        </button>
-      </div> : null}
+    <ErrorContext.Provider value={{ setErrorRefs }}>
+      <div className={styles.logMain} style={style}>
+        {showHeader ? <div className={styles.logHeader}>
+          <button className={styles.rawLog}>
+            {_('rawLog')}
+          </button>
+        </div> : null}
 
-      <div className={styles.logBody} style={bodyStyle} ref={bodyRef}>
-        {/* <Search defaultSearch /> */}
-        <MemorizedLogContent
-          particals={foldedLogger}
-          style={logStyle}
-          linkify={linkify}
-          errorMatcher={errorMatcher}
-        />
+        <div className={styles.logBody} style={bodyStyle} ref={bodyRef}>
+          {/* <Search defaultSearch /> */}
+          <MemorizedLogContent
+            particals={foldedLogger}
+            style={logStyle}
+            linkify={linkify}
+            errorMatcher={errorMatcher}
+          />
+        </div>
+        <div className={styles.logFooter} onClick={scrollBodyToTop}>
+          <a className={styles.backToTop}>{_('top')}</a>
+        </div>
       </div>
-      <div className={styles.logFooter} onClick={scrollBodyToTop}>
-        <a className={styles.backToTop}>{_('top')}</a>
-      </div>
-    </div>
+    </ErrorContext.Provider>
   );
 }

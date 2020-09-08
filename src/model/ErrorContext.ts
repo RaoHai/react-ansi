@@ -8,10 +8,8 @@ export function setErrorRefs(errors: ErrorMatcherPattern[], ref: HTMLDivElement)
   errorRefs.set(ref, errors);
 }
 
-
 export { errorRefs };
 
 export const ErrorContext = createContext({
-  refs: errorRefs,
   setErrorRefs,
 });
