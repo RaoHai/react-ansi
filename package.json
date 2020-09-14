@@ -17,6 +17,7 @@
     "cov": "cross-env CI=1 react-scripts-ts test --env=jsdom --coverage",
     "test:watch": "react-scripts-ts test --env=jsdom",
     "dev": "docz dev",
+    "doc": "docz build",
     "build": "rollup -c",
     "start": "rollup -c -w",
     "prepare": "npm run build",
