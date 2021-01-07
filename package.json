@@ -54,7 +54,7 @@
     "docz-utils": "2.3.0",
     "enzyme": "^3.9.0",
     "enzyme-adapter-react-16": "^1.13.2",
-    "gatsby-plugin-less": "^3.0.17",
+    "gatsby-plugin-less": "^4.5.0",
     "gatsby-plugin-typescript": "^2.1.23",
     "gh-pages": "^2.2.0",
     "less": "^3.9.0",
