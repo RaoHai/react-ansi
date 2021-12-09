@@ -29,7 +29,7 @@ export interface FoldableLoggerProps {
   autoScroll?: boolean;
   showHeader?: boolean;
   linkify?: boolean;
-  children: ({
+  children?: ({
     hasError,
     errors,
   }: {
