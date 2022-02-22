@@ -21,7 +21,6 @@ const MemorizedLogContent = React.memo(LogContent);
 export { Matcher, ErrorContext, errorRefs };
 export interface FoldableLoggerProps {
   log: string;
-  useLog?: () => string;
   style?: React.CSSProperties;
   bodyStyle?: React.CSSProperties;
   logStyle?: React.CSSProperties;
@@ -44,7 +43,6 @@ export default function FoldableLogger({
   bodyStyle,
   logStyle = {},
   log,
-  useLog,
   children,
   matchers = defaultMatchers,
   errorMatchers = defaultErrorMatchers,
