@@ -2,13 +2,18 @@
  * An foldable ansi logger for react
  * Inspired by ansi-to-react: https://github.com/nteract/nteract/blob/master/packages/ansi-to-react
  */
-import React, { useRef, useEffect, useState, useCallback } from 'react';
+import React, { useRef, useEffect, useState, useCallback, useMemo } from 'react';
 import produce, { enableMapSet } from 'immer';
 import { _ } from './utils/i18n';
 import { Spliter, defaultMatchers } from './model/Spliter';
 
 import { Matcher } from './matcher';
-import { ErrorMatcher, defaultErrorMatchers, ErrorMatcherPatterns, ErrorMatcherPattern } from './errorMatcher';
+import {
+  ErrorMatcher,
+  defaultErrorMatchers,
+  ErrorMatcherPatterns,
+  ErrorMatcherPattern,
+} from './errorMatcher';
 import { LogContent } from './component/LogContent';
 import { ErrorContext, errorRefs } from './model/ErrorContext';
 
@@ -20,7 +25,7 @@ const MemorizedLogContent = React.memo(LogContent);
 
 export { Matcher, ErrorContext, errorRefs };
 export interface FoldableLoggerProps {
-  log: string;
+  log: string | string[];
   style?: React.CSSProperties;
   bodyStyle?: React.CSSProperties;
   logStyle?: React.CSSProperties;
@@ -29,7 +34,7 @@ export interface FoldableLoggerProps {
   autoScroll?: boolean;
   showHeader?: boolean;
   linkify?: boolean;
-  children: ({
+  children?: ({
     hasError,
     errors,
   }: {
@@ -55,14 +60,20 @@ export default function FoldableLogger({
   const spliter = React.useMemo(() => new Spliter(matchers), [matchers]);
   const errorMatcher = React.useMemo(() => new ErrorMatcher(errorMatchers), [errorMatchers]);
   const [errors, setErrors] = useState(new Map<HTMLDivElement, ErrorMatcherPattern[]>());
+  const logArray = useMemo(() => (Array.isArray(log) ? log : log.split(/\r?\n/)), [log]);
 
-  const setErrorRefs = useCallback((error: ErrorMatcherPattern[], ref: HTMLDivElement) => {
-    setErrors(err => produce(err, draft => {
-      draft.set(ref as any, error);
-    }));
-  }, [setErrors]);
+  const setErrorRefs = useCallback(
+    (error: ErrorMatcherPattern[], ref: HTMLDivElement) => {
+      setErrors((err) =>
+        produce(err, (draft) => {
+          draft.set(ref as any, error);
+        }),
+      );
+    },
+    [setErrors],
+  );
 
-  const foldedLogger = React.useMemo(() => spliter.execute(log), [spliter, log]);
+  const foldedLogger = React.useMemo(() => spliter.execute(logArray), [spliter, log]);
 
   useEffect(() => {
     if (autoScrollFlag && bodyRef.current) {
@@ -87,7 +98,7 @@ export default function FoldableLogger({
     }
     return () => {
       bodyRef.current && bodyRef.current.removeEventListener('scroll', pauseOrResumeScrolling);
-    }
+    };
   }, [bodyRef.current, pauseOrResumeScrolling]);
 
   function scrollBodyToTop() {
@@ -100,11 +111,11 @@ export default function FoldableLogger({
   return (
     <ErrorContext.Provider value={{ setErrorRefs }}>
       <div className={`${styles.logMain} ${errors.size ? styles.hasError : ''}`} style={style}>
-        {showHeader ? <div className={styles.logHeader}>
-          <button className={styles.rawLog}>
-            {_('rawLog')}
-          </button>
-        </div> : null}
+        {showHeader ? (
+          <div className={styles.logHeader}>
+            <button>{_('rawLog')}</button>
+          </div>
+        ) : null}
 
         <div className={styles.logBody} style={bodyStyle} ref={bodyRef}>
           {/* <Search defaultSearch /> */}
