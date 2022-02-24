@@ -1,12 +1,11 @@
 {
   "name": "react-ansi",
-  "version": "3.0.0",
+  "version": "3.0.2",
   "description": "",
   "author": "RaoHai",
   "license": "MIT",
   "repository": "RaoHai/react-ansi",
   "main": "dist/index.js",
-  "module": "dist/index.esm.js",
   "typings": "dist/index.d.ts",
   "engines": {
     "node": ">=8",
@@ -38,8 +37,11 @@
     "anser": "^1.4.8",
     "escape-carriage": "^1.3.0",
     "immer": "^7.0.8",
-    "react": "^16.12.0 || ^17.0.0",
     "react-virtualized": "^9.22.3"
+  },
+  "peerDependencies": {
+    "react": "^15.0.0 || ^16.0.0 || ^17.0.0",
+    "react-dom": "^15.0.0 || ^16.0.0 || ^17.0.0"
   },
   "files": [
     "dist",
@@ -59,7 +61,6 @@
     "gh-pages": "^3.0.0",
     "lint-staged": "^10.0.7",
     "prettier": "^2.2.1",
-    "react-dom": "^17.0.2",
     "yorkie": "^2.0.0"
   }
 }
