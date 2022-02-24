@@ -1,13 +1,19 @@
-import { Matcher, Partical } from "../matcher";
+import { Matcher, Partical } from '../matcher';
 
 export const washRegExp = '\x1b?[[0-9;]+[a-zA-Z]';
 
 export class Spliter {
   constructor(public matchers: Matcher[]) {}
 
-  execute(log: string) {
-    const particals: Partical[] = [];
+  execute(logs: string[]) {
+    return logs.reduce((prev, log) => {
+      return prev.concat(this.executeLine(log));
+    }, [] as Partical[]);
+  }
+
+  private executeLine(log: string) {
     let lastIndex = 0;
+    const particals: Partical[] = [];
     for (let i = 0; i < this.matchers.length; i++) {
       const { regexStart, regexEnd, label, matcherOptions } = this.matchers[i];
       regexStart.lastIndex = lastIndex;
@@ -22,9 +28,8 @@ export class Spliter {
         continue;
       }
 
-      const textLabel = label.indexOf('$') === 0 ? startMatch[
-        parseInt(label.replace('$', ''), 10)
-      ] : label;
+      const textLabel =
+        label.indexOf('$') === 0 ? startMatch[parseInt(label.replace('$', ''), 10)] : label;
       const startPosition = startMatch.index;
       const endPosition = endMatch.index;
       const cursor = endPosition + endMatch[0].length;
@@ -58,14 +63,9 @@ export class Spliter {
 }
 
 export const defaultMatchers = [
-  new Matcher(
-    /travis_fold:start:\w+\n(^.*$)/gm,
-    /travis_fold:end:\w+\n(^.*$)/gm,
-    '$1',
-    {
-      defaultFold: true,
-    }
-  )
+  new Matcher(/travis_fold:start:\w+\n(^.*$)/gm, /travis_fold:end:\w+\n(^.*$)/gm, '$1', {
+    defaultFold: true,
+  }),
 ] as Matcher[];
 
 export const defaultSpliters = new Spliter(defaultMatchers);

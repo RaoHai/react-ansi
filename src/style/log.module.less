@@ -1,20 +1,20 @@
 .metaList {
   display: flex;
   flex-wrap: wrap;
-
-  list-style: none;
   margin: 0;
   padding: 0;
+
+  list-style: none;
 
   li {
     flex: 0 0 50%;
     margin: 0 0 12px 0;
 
     em {
-      font-style: normal;
-      font-weight: 14px;
-      color: #314659;
       margin-right: 1em;
+      color: #314659;
+      font-weight: 14px;
+      font-style: normal;
       &::after {
         content: '：';
       }
@@ -33,27 +33,28 @@
 .logHeader {
   height: 28px;
   padding: 0.7em 0.8em 0.6em;
-  background: #444;
   text-align: right;
+  background: #444;
 }
 
 .logBody {
   position: relative;
+  background-color: #222;
 }
 
 .logFooter {
-  text-align: right;
-  background: #222;
+  height: 20px;
+  padding: 0 8px;
   color: #f1f1f1;
   font-size: 12px;
-  height: 20px;
   line-height: 20px;
-  padding: 0 8px;
+  text-align: right;
+  background: #222;
 }
 
 .backToTop {
-  color: #f1f1f1;
   padding-right: 12px;
+  color: #f1f1f1;
   background: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIGhlaWdodD0iNSIgd2lkdGg9IjEwIiB2aWV3Qm94PSIwIDAgMTAgNSI+CjxwYXRoIGZpbGw9IiNjMmMyYzIiIGQ9Ik0xMCw1LDUsMCwwLDV6Ii8+Cjwvc3ZnPgo=)
     right 5px no-repeat #2b2b2b;
 }
@@ -61,27 +62,23 @@
 .foldLine,
 .logLine {
   position: relative;
-  padding: 0 15px 0 62px;
-  margin: 0;
   min-height: 19px;
-  &:hover, &:hover::before {
+  margin: 0;
+  padding: 0 15px 0 62px;
+  &:hover,
+  &:hover::before {
     background-color: #444 !important;
   }
   a.lineNo {
-    display: inline-block;
-    text-align: right;
-    min-width: 40px;
-    margin-left: -40px;
-    cursor: pointer;
-    text-decoration: none;
     position: absolute;
+    display: inline-block;
+    min-width: 40px;
+    margin-left: calc(-40px - 1em);
+    padding-right: 1em;
     color: #666;
-
-    &::before {
-      content: counter(line-numbering);
-      counter-increment: line-numbering;
-      padding-right: 1em;
-    }
+    text-align: right;
+    text-decoration: none;
+    cursor: pointer;
   }
 }
 
@@ -95,32 +92,31 @@
   // padding-left: 35px;
 
   &::before {
-    content: ' ';
     position: absolute;
-    left: 8px;
     top: 4px;
+    left: 8px;
     width: 10px;
     height: 10px;
     background: url('../media/arrow.svg') 8px 3px no-repeat #2b2b2b;
     background-position: center;
-    transition: transform cubic-bezier(0.785, 0.135, 0.15, 0.86) .3s;
+    transition: transform cubic-bezier(0.785, 0.135, 0.15, 0.86) 0.3s;
+    content: ' ';
   }
 }
 
 .ansi {
-  clear: left;
+  // clear: left;
   min-height: 42px;
+  margin-top: 0;
+  margin-bottom: -45px;
   padding: 15px 0 2em 0;
   color: #f1f1f1;
-  font-family: "RobotoMono",Monaco,"Courier New",monospace;
   font-size: 1em;
+  font-family: 'RobotoMono', Monaco, 'Courier New', monospace;
   line-height: 1.58;
   white-space: pre-wrap;
   word-wrap: break-word;
-  background-color: #222;
   counter-reset: line-numbering;
-  margin-top: 0;
-  margin-bottom: -45px;
 }
 
 .fold {
