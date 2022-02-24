@@ -1,5 +1,5 @@
 import React from 'react';
-import { mount } from 'enzyme';
+import { render } from '@testing-library/react';
 import ReactAnsi from '..';
 
 const log = `
@@ -14,7 +14,12 @@ const log = `
 
 describe('react-ansi', () => {
   it('should render', () => {
-    const wrapper = mount(<ReactAnsi log={log} />);
+    const wrapper = render(<ReactAnsi log={log} />);
+    expect(wrapper);
+  });
+
+  it('should render virtual', () => {
+    const wrapper = render(<ReactAnsi log={log} virtual />);
     expect(wrapper);
   });
 });

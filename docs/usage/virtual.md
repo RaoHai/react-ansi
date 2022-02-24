@@ -1,4 +1,4 @@
-## Basic Usage
+## Virtual
 
 ```jsx
 import React from 'react';
@@ -12,6 +12,7 @@ export default () => (
       bodyStyle={{ height: '100%', overflowY: 'auto' }}
       logStyle={{ height: 500 }}
       autoScroll
+      virtual
     />
   </div>
 );

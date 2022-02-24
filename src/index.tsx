@@ -14,7 +14,7 @@ import {
   ErrorMatcherPatterns,
   ErrorMatcherPattern,
 } from './errorMatcher';
-import { LogContent } from './component/LogContent';
+import LogContent from './component/LogContent';
 import { ErrorContext, errorRefs } from './model/ErrorContext';
 
 import styles from './style/log.module.less';
@@ -34,6 +34,7 @@ export interface FoldableLoggerProps {
   autoScroll?: boolean;
   showHeader?: boolean;
   linkify?: boolean;
+  virtual?: boolean;
   children?: ({
     hasError,
     errors,
@@ -54,6 +55,7 @@ export default function FoldableLogger({
   autoScroll = false,
   showHeader = false,
   linkify = true,
+  virtual = false,
 }: FoldableLoggerProps) {
   const [autoScrollFlag, setAutoScrollFlag] = useState(autoScroll);
   const bodyRef = useRef<HTMLDivElement>(null);
@@ -124,6 +126,8 @@ export default function FoldableLogger({
             style={logStyle}
             linkify={linkify}
             errorMatcher={errorMatcher}
+            virtual={virtual}
+            autoScroll={autoScrollFlag}
           />
         </div>
         <div className={styles.logFooter} onClick={scrollBodyToTop}>
