@@ -148,6 +148,7 @@ export function RawLogger({
     return lines.map((line, index) => (
       <Line
         {...lineProps}
+        key={index}
         line={line.content}
         errors={line.errors}
         index={index}
